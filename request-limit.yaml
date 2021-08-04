@@ -1,0 +1,34 @@
+apiVersion: config.istio.io/v1alpha2
+kind: handler
+metadata:
+  name: quotahandler
+  namespace: istio-system
+spec:
+  compiledAdapter: memquota
+  params:
+    quotas:
+    - name: requestcountquota.instance.istio-system
+      maxAmount: 500
+      validDuration: 1s
+      # The first matching override is applied.
+      # A requestcount instance is checked against override dimensions.
+      overrides:
+      # The following override applies to 'reviews' regardless
+      # of the source.
+      - dimensions:
+          destination: reviews
+        maxAmount: 1
+        validDuration: 5s
+      # The following override applies to 'productpage' when
+      # the source is a specific ip address.
+      - dimensions:
+          destination: productpage
+          source: "10.28.11.20"
+        maxAmount: 500
+        validDuration: 1s
+      # The following override applies to 'productpage' regardless
+      # of the source.
+      - dimensions:
+          destination: productpage
+        maxAmount: 2
+        validDuration: 5
