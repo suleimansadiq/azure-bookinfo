@@ -10,9 +10,9 @@ spec:
     connectionPoolSize: 10
     quotas:
     - name: requestcountquota.instance.istio-system
-      maxAmount: 500
-      validDuration: 1s
-      bucketDuration: 500ms
+      maxAmount: 1
+      validDuration: 5s
+      bucketDuration: 10ms
       rateLimitAlgorithm: ROLLING_WINDOW
       # The first matching override is applied.
       # A requestcount instance is checked against override dimensions.
@@ -27,7 +27,7 @@ spec:
       - dimensions:
           destination: productpage
           source: "10.28.11.20"
-        maxAmount: 500
+        maxAmount: 1
       # The following override applies to 'productpage' regardless
       # of the source.
       - dimensions:
