@@ -5,9 +5,9 @@ metadata:
 spec:
   hard:
     pods: "4" 
-    requests.cpu: "1" 
+    requests.cpu: "10" 
     requests.memory: 1Gi 
     requests.ephemeral-storage: 2Gi 
-    limits.cpu: "2" 
-    limits.memory: 2Gi 
+    limits.cpu: "20" 
+    limits.memory: 20Gi 
     limits.ephemeral-storage: 4Gi
