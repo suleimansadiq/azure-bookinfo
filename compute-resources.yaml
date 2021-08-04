@@ -4,7 +4,7 @@ metadata:
   name: compute-resources
 spec:
   hard:
-    pods: "15" 
+    pods: "14" 
     requests.cpu: "200" 
     requests.memory: 10Gi 
     requests.ephemeral-storage: 20Gi 
