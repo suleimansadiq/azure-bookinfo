@@ -18,23 +18,23 @@
 
 # Note: a configmap is needed to make the rate limit deployment work properly, for example:
 #
-  apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: ratelimit-config
-  data:
-    config.yaml: |
-      domain: echo-ratelimit
-      descriptors:
-        - key: PATH
-         value: "/"
-          rate_limit:
-            unit: seconds
-            requests_per_unit: 1
-        - key: PATH
-          rate_limit:
-            unit: minute
-            requests_per_unit: 100
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ratelimit-config
+data:
+  config.yaml: |
+    domain: productpage-ratelimit
+    descriptors:
+      - key: PATH
+        value: "/productpage"
+        rate_limit:
+          unit: minute
+          requests_per_unit: 1
+      - key: PATH
+        rate_limit:
+          unit: minute
+          requests_per_unit: 100
 ##################################################################################################
 apiVersion: v1
 kind: Service
