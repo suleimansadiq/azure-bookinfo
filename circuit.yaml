@@ -1,0 +1,12 @@
+apiVersion: config.istio.io/v1alpha2
+kind: DestinationPolicy
+metadata:
+  name: reviews-v1-cb
+spec:
+  destination:
+    name: reviews
+    labels:
+      version: v1
+  circuitBreaker:
+    simpleCb:
+       maxConnections: 10
