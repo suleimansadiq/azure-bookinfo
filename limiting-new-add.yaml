@@ -1,0 +1,33 @@
+apiVersion: config.istio.io/v1alpha2
+kind: memquota
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"config.istio.io/v1alpha2","kind":"memquota","metadata":{"annotations":{},"name":"handler","namespace":"istio-system"},"spec":{"quotas":[{"maxAmount":500,"name":"requestcount.quota.istio-system","overrides":[{"dimensions":{"destination":"reviews"},"maxAmount":1,"validDuration":"5s"},{"dimensions":{"destination":"productpage","source":"10.28.11.20"},"maxAmount":500,"validDuration":"1s"},{"dimensions":{"destination":"productpage"},"maxAmount":2,"validDuration":"5s"}],"validDuration":"1s"}]}}
+  clusterName: ""
+  creationTimestamp: 2018-10-16T17:46:13Z
+  generation: 1
+  name: handler
+  namespace: istio-system
+  resourceVersion: "15902"
+  selfLink: /apis/config.istio.io/v1alpha2/namespaces/istio-system/memquotas/handler
+  uid: 5fd5f613-d16b-11e8-bfea-625578ce8fcd
+spec:
+  quotas:
+  - maxAmount: 1
+    name: requestcount.quota.istio-system
+    overrides:
+    - dimensions:
+        destination: reviews
+      maxAmount: 1
+      validDuration: 5s
+    - dimensions:
+        destination: productpage
+        source: 10.28.11.20
+      maxAmount: 1
+      validDuration: 5s
+    - dimensions:
+        destination: productpage
+      maxAmount: 1
+      validDuration: 5s
+    validDuration: 5s
