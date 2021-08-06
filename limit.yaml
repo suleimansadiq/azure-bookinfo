@@ -1,64 +1,22 @@
-apiVersion: v1
-kind: ConfigMap
+apiVersion: config.istio.io/v1alpha2
+kind: memquota
 metadata:
-  name: ratelimit-config
-  namespace: ratelimit
-data:
-  config.yaml: |-
-    domain: ratelimit
-    descriptors:
-      - key: PATH
-        value: "http://istio-ingressgateway-istio-system.apps.ryg8xemm.southcentralus.aroapp.io/productpage"
-        rate_limit:
-          unit: second
-          requests_per_unit: 1
-      - key: remote_address
-        rate_limit:
-          requests_per_unit: 11
-          unit: second
-      - key: HOST
-        value: "http://istio-ingressgateway-istio-system.apps.ryg8xemm.southcentralus.aroapp.io/productpage"
-        rate_limit:
-          unit: second
-          requests_per_unit: 1
-     apiVersion: "security.istio.io/v1beta1"
-kind: "PeerAuthentication"
-metadata:
-  name: "ratelimit"
-  namespace: "ratelimit"
+  name: handler
+  namespace: istio-system
 spec:
-  selector:
-    matchLabels:
-      app: ratelimit
-  portLevelMtls:
-    8081:
-      mode: PERMISSIVE
-    apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: deny-all-inbound
-  namespace: ratelimit
-spec:
-  podSelector: {}
-  policyTypes:
-  - Ingress
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-istio-ingressgateway
-  namespace: ratelimit
-spec:
-  podSelector:
-    matchLabels:
-      app: ratelimit
-  policyTypes:
-  - Ingress
-  ingress:
-  - from:
-      - namespaceSelector: {}
-        podSelector:
-          matchLabels:
-            istio: ingressgateway
-    ports:
-    - port: 8081
+  quotas:
+  - name: requestcount.quota.istio-system
+    # default rate limit is 5000qps
+    maxAmount: 5000
+    validDuration: 1s
+    # The first matching override is applied.
+    # A requestcount instance is checked against override dimensions.
+    overrides:
+    # The following override applies to traffic from 'rewiews' version v2,
+    # destined for the ratings service. The destinationVersion dimension is ignored.
+    - dimensions:
+        destination: ratings
+        source: reviews
+        sourceVersion: v2
+      maxAmount: 1
+      validDuration: 5s
