@@ -27,7 +27,7 @@ data:
     domain: productpage-ratelimit
     descriptors:
       - key: PATH
-        value: "/productpage"
+        value: "istio-ingressgateway-istio-system.apps.ryg8xemm.southcentralus.aroapp.io/productpage"
         rate_limit:
           unit: minute
           requests_per_unit: 1
