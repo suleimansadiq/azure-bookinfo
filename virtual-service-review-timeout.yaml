@@ -8,5 +8,5 @@ spec:
   http:
   - route:
     - destination:
-        host: recommendation
+        host: reviews
     timeout: 1.000s
