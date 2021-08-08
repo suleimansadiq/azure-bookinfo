@@ -1,18 +1,22 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: httpbin
+  name: serviceB
 spec:
-  host: httpbin
-  trafficPolicy:
-    connectionPool:
-      tcp:
-        maxConnections: 1
-      http:
-        http1MaxPendingRequests: 1
-        maxRequestsPerConnection: 1
-    outlierDetection:
-      consecutive5xxErrors: 1
-      interval: 1s
-      baseEjectionTime: 3m
-      maxEjectionPercent: 100
+  host: reviews
+  subsets:
+    - name: serviceC-v2
+      labels:
+        version: v2
+      trafficPolicy:
+        connectionPool:
+          http:
+            http1MaxPendingRequests: 10
+            maxRequestsPerConnection: 1
+          tcp:
+            maxConnections: 5
+        outlierDetection:
+            baseEjectionTime: 50s
+            consecutiveErrors: 1
+            interval: 25s
+            maxEjectionPercent: 100
