@@ -1,10 +1,10 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: reviews-delay
+  name: ratings
 spec:
   hosts:
-  - reviews
+  - ratings
   http:
   - fault:
       delay:
@@ -12,5 +12,5 @@ spec:
         fixedDelay: 2s
     route:
     - destination:
-        host: reviews
-        subset: v2
+        host: ratings
+        subset: v1
