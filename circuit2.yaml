@@ -11,12 +11,12 @@ spec:
       trafficPolicy:
         connectionPool:
           http:
-            http1MaxPendingRequests: 5
+            http1MaxPendingRequests: 1
             maxRequestsPerConnection: 1
           tcp:
             maxConnections: 1
         outlierDetection:
-          baseEjectionTime: 120.000s
+          baseEjectionTime: 3m
           consecutiveErrors: 1
-          interval: 1.000s
+          interval: 10.000s
           maxEjectionPercent: 50
