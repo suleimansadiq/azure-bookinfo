@@ -1,11 +1,11 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: serviceB
+  name: service-b
 spec:
   host: reviews
   subsets:
-    - name: serviceC-v2
+    - name: servicec-v2
       labels:
         version: v2
       trafficPolicy:
