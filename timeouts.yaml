@@ -1,13 +1,13 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: ratings
+  name: reviews
 spec:
   hosts:
-  - ratings
+  - reviews
   http:
   - route:
     - destination:
-        host: ratings
+        host: reviews
         subset: v1
     timeout: 10s
